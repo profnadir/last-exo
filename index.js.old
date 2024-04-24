@@ -1,0 +1,118 @@
+function ajouterStagiaire() {
+    var nom = document.getElementById('nom').value;
+    var age = document.getElementById('age').value;
+    var genre = document.querySelector('input[name="genre"]:checked').value;
+    var niveau = '';
+    var niveaux = document.querySelectorAll('input[name="niveau"]:checked');
+    for (var i = 0; i < niveaux.length; i++) {
+        niveau += niveaux[i].value + ' - ';
+    }
+    var ville = document.getElementById('ville').value;
+
+    var table = document.getElementById('tableStagiaires').getElementsByTagName('tbody')[0];
+    var newRow = document.createElement('tr');
+
+    var nomTD = document.createElement('td');
+    var ageTD = document.createElement('td');
+    var genreTD = document.createElement('td');
+    var niveauTD = document.createElement('td');
+    var villeTD = document.createElement('td');
+    var ActionsTD = document.createElement('td');
+    var supprimerBtn = document.createElement('button');
+    var modifierBtn = document.createElement('button');
+
+    nomTD.appendChild(document.createTextNode(nom));
+    ageTD.appendChild(document.createTextNode(age));
+    genreTD.appendChild(document.createTextNode(genre));
+    niveauTD.appendChild(document.createTextNode(niveau));
+    villeTD.appendChild(document.createTextNode(ville));
+    supprimerBtn.appendChild(document.createTextNode('Supprimer'));
+    modifierBtn.appendChild(document.createTextNode('Modifier'));
+    ActionsTD.appendChild(supprimerBtn);
+    ActionsTD.appendChild(modifierBtn);
+
+    supprimerBtn.addEventListener('click', function() {
+        var parentRow = this.parentNode.parentNode;
+        parentRow.remove();
+    });
+
+    modifierBtn.addEventListener('click', function() {
+        var parentRow = this.parentNode.parentNode;
+        var cells = parentRow.getElementsByTagName('td');
+        var nom = cells[0].textContent;
+        var age = cells[1].textContent;
+        var genre = cells[2].textContent;
+        var niveau = cells[3].textContent;
+        var ville = cells[4].textContent;
+
+        document.getElementById('nom').value = nom;
+        document.getElementById('age').value = age;
+        if (genre === 'homme') {
+            document.getElementById('homme').checked = true;
+        } else {
+            document.getElementById('femme').checked = true;
+        }
+        var niveaux = niveau.split(' - ');
+        var checkboxes = document.querySelectorAll('input[name="niveau"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = false;
+            niveaux.forEach(function(niv) {
+                if (checkbox.value === niv) {
+                    checkbox.checked = true;
+                }
+            });
+        });
+        document.getElementById('ville').value = ville;
+
+        document.getElementById('ajouterBtn').style.display = 'none';
+        document.getElementById('modifierBtn').style.display = 'inline';
+        document.getElementById('modifierBtn').onclick = function() {
+            parentRow.cells[0].textContent = document.getElementById('nom').value;
+            parentRow.cells[1].textContent = document.getElementById('age').value;
+            parentRow.cells[2].textContent = document.querySelector('input[name="genre"]:checked').value;
+            var niveaux = '';
+            document.querySelectorAll('input[name="niveau"]:checked').forEach(function(checkbox) {
+                niveaux += checkbox.value + ' - ';
+            });
+            parentRow.cells[3].textContent = niveaux;
+            parentRow.cells[4].textContent = document.getElementById('ville').value;
+
+            resetForm();
+
+            document.getElementById('ajouterBtn').style.display = 'inline';
+            document.getElementById('modifierBtn').style.display = 'none';
+            document.getElementById('ajouterBtn').onclick = ajouterStagiaire;
+        };
+    });
+
+    newRow.appendChild(nomTD);
+    newRow.appendChild(ageTD);
+    newRow.appendChild(genreTD);
+    newRow.appendChild(niveauTD);
+    newRow.appendChild(villeTD);
+    newRow.appendChild(ActionsTD);
+
+    // Ajouter des écouteurs d'événements pour chaque nouvelle ligne ajoutée
+    newRow.addEventListener('mouseenter', function() {
+        this.style.backgroundColor = 'lightgreen';
+    });
+    newRow.addEventListener('mouseleave', function() {
+        this.style.backgroundColor = ''; // Réinitialiser la couleur de fond
+    });
+
+    table.appendChild(newRow);
+
+    resetForm();
+}
+function resetForm() {
+    document.getElementById('nom').value = '';
+    document.getElementById('age').value = '';
+    document.querySelectorAll('input[name="genre"]').forEach(function (radio) {
+        radio.checked = false;
+    });
+    document.querySelectorAll('input[name="niveau"]').forEach(function (checkbox) {
+        checkbox.checked = false;
+    });
+    document.getElementById('ville').value = '';
+}
+

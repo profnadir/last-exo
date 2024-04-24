@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form action="#" method="post" id="myForm">
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom"><br><br>
+        
+        <label for="age">Age :</label>
+        <input type="text" id="age" name="age"><br><br>
+        
+        <label>Genre :</label>
+        <input type="radio" id="homme" name="genre" value="homme">
+        <label for="homme">Homme</label>
+        <input type="radio" id="femme" name="genre" value="femme">
+        <label for="femme">Femme</label><br><br>
+        
+        <label>Niveau :</label>
+        <input type="checkbox" id="technicien" name="niveau" value="Technicien (T)">
+        <label for="technicien">Technicien (T)</label>
+        <input type="checkbox" id="specialise" name="niveau" value="Technicien Spécialisé (TS)">
+        <label for="specialise">Technicien Spécialisé (TS)</label>
+        <input type="checkbox" id="qualification" name="niveau" value="Qualification (Q)">
+        <label for="qualification">Qualification (Q)</label><br><br>
+        
+        <label for="ville">Ville :</label>
+        <select id="ville" name="ville">
+            <option value="casablanca">Casablanca</option>
+            <option value="rabat">Rabat</option>
+            <option value="tanger">Tanger</option>
+        </select><br><br>
+        <!-- Choisir un console: 
+        <select id="consoles" >
+
+        </select><br> -->
+        
+        <input type="button" onclick="ajouterStagiaire()" value="Ajouter" id="ajouterBtn">
+        <input type="button" id="modifierBtn" style="display: none;" value="Modifier">
+ 
+    </form>
+    <table id="tableStagiaires" border="1">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Age</th>
+                <th>Genre</th>
+                <th>Niveau</th>
+                <th>Ville</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les données des stagiaires seront ajoutées ici -->
+        </tbody>
+    </table>
+    <script src="index.js"></script>
+</body>
+</html>
